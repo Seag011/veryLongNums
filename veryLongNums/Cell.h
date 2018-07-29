@@ -16,3 +16,4 @@ struct Cell
 	Cell operator = (Cell right);
 
 };
+
