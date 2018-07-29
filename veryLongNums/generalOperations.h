@@ -1,10 +1,5 @@
 #pragma once
-#define "Cell.h"
-typedef unsigned U;
-typedef int I;
-typedef short unsigned US;
-typedef long unsigned UL;
-typedef long long unsigned ULL;
+#include "Cell.h"
 
 #define MAX_CELLS 10000
 #define MAX_NUMBER_IN_CELL 999
@@ -13,7 +8,7 @@ typedef long long unsigned ULL;
 class GeneralOp
 {
 protected:
-	/*struct Cell
+	struct Cell
 	{
 		unsigned short body : 10;
 		Cell(US a) : body(a) {};
@@ -29,7 +24,7 @@ protected:
 
 		Cell operator = (Cell right);
 
-	}; */
+	};
 	
 	struct Number
 	{

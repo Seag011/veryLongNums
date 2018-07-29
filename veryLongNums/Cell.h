@@ -1,5 +1,4 @@
-#pragma once
-#include 
+#pragma once 
 struct Cell
 {
 	unsigned short body : 10;
