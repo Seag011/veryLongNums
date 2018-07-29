@@ -13,16 +13,15 @@ protected:
 		double fraction = 0;
 	};
 
-	friend VLD& operator + (VLD left, VLD right);
-	friend VLD& operator - (VLD left, VLD right);
-	friend VLD& operator * (VLD left, VLD right);
-	friend VLD& operator / (VLD left, VLD right);
+	friend VLD& operator + (const VLD&  left, const VLD& right);
+	friend VLD& operator - (const VLD&  left, const VLD& right);
+	friend VLD& operator * (const VLD&  left, const VLD& right);
+	friend VLD& operator / (const VLD&  left, const VLD& right);
 
-	friend VLD& operator > (VLD left, VLD right);
-	friend VLD& operator >= (VLD left, VLD right);
-	friend VLD& operator < (VLD left, VLD right);
-	friend VLD& operator <= (VLD left, VLD right);
-	friend VLD& operator == (VLD left, VLD right);
-
+	friend bool operator >  (const VLD&  left, const VLD& right);
+	friend bool operator >= (const VLD&  left, const VLD& right);
+	friend bool operator <  (const VLD&  left, const VLD& right);
+	friend bool operator <= (const VLD&  left, const VLD& right);
+	friend bool operator == (const VLD&  left, const VLD& right);
 
 };

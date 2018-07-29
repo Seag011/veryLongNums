@@ -5,15 +5,15 @@ class VL : private GeneralOp //very long
 {
 protected: 
 	
-	friend VL& operator + (VL left, VL right);
-	friend VL& operator - (VL left, VL right);
-	friend VL& operator * (VL left, VL right);
-	friend VL& operator / (VL left, VL right);
+	friend VL& operator + (const VL& left, const VL& right);
+	friend VL& operator - (const VL& left, const VL& right);
+	friend VL& operator * (const VL& left, const VL& right);
+	friend VL& operator / (const VL& left, const VL& right);
 
-	friend VL& operator > (VL left, VL right);
-	friend VL& operator >= (VL left, VL right);
-	friend VL& operator < (VL left, VL right);
-	friend VL& operator <= (VL left, VL right);
-	friend VL& operator == (VL left, GeneralOp right);
+	friend bool operator >  (const VL& left, const VL& right);
+	friend bool operator >= (const VL& left, const VL& right);
+	friend bool operator <  (const VL& left, const VL& right);
+	friend bool operator <= (const VL& left, const VL& right);
+	friend bool operator == (const VL& left, const VL& right);
 
 };
