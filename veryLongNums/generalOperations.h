@@ -1,5 +1,5 @@
 #pragma once
-#include "Cell.h"
+#include "Number.h"
 
 
 class GeneralOp
@@ -23,14 +23,10 @@ protected:
 
 	}; */
 	
-	struct Number
-	{
-		Cell body[MAX_CELLS];
-	};
-
+	
 	Number number;
 
-	friend GeneralOp& operator + (const GeneralOp& left, const GeneralOp& right);
+	/*friend GeneralOp& operator + (const GeneralOp& left, const GeneralOp& right);
 	friend GeneralOp& operator - (const GeneralOp& left, const GeneralOp& right);
 	friend GeneralOp& operator * (const GeneralOp& left, const GeneralOp& right);
 	friend GeneralOp& operator / (const GeneralOp& left, const GeneralOp& right);
@@ -39,11 +35,11 @@ protected:
 	friend bool operator >= (const GeneralOp& left, const GeneralOp& right);
 	friend bool operator <  (const GeneralOp& left, const GeneralOp& right);
 	friend bool operator <= (const GeneralOp& left, const GeneralOp& right);
-	friend bool operator == (const GeneralOp& left, const GeneralOp& right);
+	friend bool operator == (const GeneralOp& left, const GeneralOp& right);*/
 
 	void operator = (const GeneralOp& right);
 
-	void operator << (GeneralOp left);
-	void operator >> (GeneralOp right);
+	void operator << (const GeneralOp& left);
+	void operator >> (const GeneralOp& right);
 	//Add equality operators for another types
 };

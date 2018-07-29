@@ -15,5 +15,4 @@ struct Cell
 
 	Cell& operator = (const US& right);
 	Cell& operator = (const Cell& right);
-
 };
