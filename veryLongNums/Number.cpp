@@ -3,12 +3,7 @@
 
 Number & operator+(const Number & left, const Number & right)
 {
-	Number result;
-	Cell temp;
-	for(size_t i = 0; i < MAX_CELLS; i++)
-	{
-		result.body[i] = (left.body[i] + right.body[i]);
-	}
+	
 }
 
 Number & operator-(const Number & left, const Number & right)
@@ -52,16 +47,16 @@ bool operator==(const Number & left, const Number & right)
 }
 
 Number::Number()
-{
-	for(size_t i = 0; i < MAX_CELLS; i++)
-	{
-		this->body[i] = 0;
-	}
-}
+{}
 
 const U& Number::size()
 {
 	return (this->body.size());
+}
+
+US Number::pull_num(U pos)
+{
+	return US();
 }
 
 void Number::operator=(Number& obj)
@@ -74,9 +69,16 @@ void Number::operator=(Number& obj)
 	}
 }
 
-void Number::operator=(const long long int& obj)
+void Number::operator=(const LL& obj)
 {
-
+	LL temp = obj;
+	if (temp < 0)
+		this->sign = false;
+	while (temp > 0)
+	{
+		this->body.push_back(temp % 1000);
+		temp /= 1000;
+	}
 }
 
 
@@ -87,13 +89,14 @@ std::ostream& operator <<(std::ostream& os, const Number& obj)
 
 	if (obj_size != 0)
 	{
-		if (obj_size < 0)
+		if (!a.sign)
 			os << "-";
-		for (size_t i = obj_size - 1; i > 0; i++)
+		for (L i = obj_size - 1; i >= 0; i--)
 		{
 			os << obj.body[i]; 
 		}
 	}
 	else
 		os << "0";
+	return os;
 }

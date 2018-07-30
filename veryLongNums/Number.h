@@ -6,15 +6,17 @@ struct Number
 {
 public:
 	std::vector <Cell> body;
-	
-	/* The biggest digits consists in 0th cell.  *
-	 * It's also contains a minus and plus of	 *
-	 * the number as 1**** or 0**** respectively *
-	 * where * is any number					 */
+	bool sign = true;
+	/* False - negative * 
+	 * true - positive  */
 				
 	Number();
 
 	const U& size();
+	US pull_num(U pos);
+	/* pos the left 
+	 * is the most biggest 
+	 */
 	
 	friend Number& operator + (const Number& left, const Number& right);
 	friend Number& operator - (const Number& left, const Number& right);
@@ -28,7 +30,7 @@ public:
 	friend bool operator == (const Number& left, const Number& right);
 
 	void operator = (Number& obj);
-	void operator = (const long long int& obj);
+	void operator = (const LL& obj);
 	
 
 	friend std::ostream& operator <<(std::ostream& os, const Number obj);

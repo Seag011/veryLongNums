@@ -6,54 +6,51 @@ Cell operator+(Cell const& left, Cell const& right)
 	Cell result = (left.body + right.body);
 	return result;
 }
-
+//DONE:
 Cell operator-(Cell const& left, Cell const& right)
 {
-	Cell result = (left.body - right.body);
-	return result;
+	if (left < right)
+		return (MAX_CELL + 1 + left.body) - right.body;
+	else 
+		return (left.body - right.body);
 }
 
 bool operator>(Cell const& left, Cell const& right)
 {
-	if (left.body > right.body)
-		return true;
-	return false;
+	return (left.body > right.body);
 }
 
 bool operator>=(Cell const& left, Cell const& right)
 {
-	if (left.body >= right.body)
-		return true;
-	return false;
+	return (left.body >= right.body);
 }
 
 bool operator<(Cell const& left, Cell const& right)
 {
-	if (left.body < right.body)
-		return true;
-	return false;
+	return (left.body < right.body);
 }
 
 bool operator<=(Cell const& left, Cell const& right)
 {
-	if (left.body <= right.body)
-		return true;
-	return false;
+	return (left.body <= right.body);
 }
 
 bool operator==(Cell const& left, Cell const& right)
 {
-	if (left.body == right.body)
-		return true;
-	return false;
+	return (left.body == right.body);
 }
 
-Cell& Cell::operator = (US const& right)
+Cell::Cell()
+{
+	body = 0;
+}
+
+void Cell::operator=(const U& right)
 {
 	this->body = right;
 }
 
-Cell& Cell::operator=(Cell const& right)
+void Cell::operator=(Cell const& right)
 {
 	this->body = right.body;
 }
@@ -61,4 +58,6 @@ Cell& Cell::operator=(Cell const& right)
 std::ostream& operator<<(std::ostream& os, const Cell& obj)
 {
 	os << obj.body;
+	return os;
 }
+//DONE ALL!------------------------------------------------------
