@@ -57,3 +57,8 @@ Cell& Cell::operator=(Cell const& right)
 {
 	this->body = right.body;
 }
+
+std::ostream& operator<<(std::ostream& os, const Cell& obj)
+{
+	os << obj.body;
+}

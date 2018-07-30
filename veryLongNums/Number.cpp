@@ -59,15 +59,41 @@ Number::Number()
 	}
 }
 
-US Number::size()
+const U& Number::size()
 {
 	return (this->body.size());
 }
 
-void Number::operator=(const Number& right)
+void Number::operator=(Number& obj)
 {
-	for (size_t i = 0; i < MAX_CELLS || i < (right.size()); i++)
+	U obj_size = obj.size();
+	for (size_t i = 0; i < obj_size; i++)
 	{
-		
+		this->body.resize(obj_size);
+		this->body[i] = obj.body[i];
 	}
+}
+
+void Number::operator=(const long long int& obj)
+{
+
+}
+
+
+std::ostream& operator <<(std::ostream& os, const Number& obj)
+{
+	Number a = obj;	 
+	U obj_size = a.size();	
+
+	if (obj_size != 0)
+	{
+		if (obj_size < 0)
+			os << "-";
+		for (size_t i = obj_size - 1; i > 0; i++)
+		{
+			os << obj.body[i]; 
+		}
+	}
+	else
+		os << "0";
 }

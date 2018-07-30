@@ -5,7 +5,6 @@ struct Cell
 	Cell();
 	Cell(US a) : body(a){};
 	
-
 	friend Cell operator +  (const Cell& left, const Cell& right);
 	friend Cell operator -  (const Cell& left, const Cell& right);
 
@@ -17,4 +16,5 @@ struct Cell
 
 	Cell& operator = (const US& right);
 	Cell& operator = (const Cell& right);
+	friend std::ostream& operator <<(std::ostream& os, const Cell& obj);
 };
