@@ -1,64 +1,170 @@
 #include "stdafx.h"
 #include "Number.h"
+#include <algorithm>
 
 Number & operator+(const Number & left, const Number & right)
 {
-	
-}
+}//TODO
 
 Number & operator-(const Number & left, const Number & right)
 {
 	// TODO: insert return statement here
-}
+}//TODO
 
 Number & operator*(const Number & left, const Number & right)
 {
 	// TODO: insert return statement here
-}
+}//TODO
 
 Number & operator/(const Number & left, const Number & right)
 {
 	// TODO: insert return statement here
-}
+}//TODO
 
 bool operator>(const Number & left, const Number & right)
 {
+	if (left.sign != right.sign)
+		return left.sign && !right.sign;
+	else
+	{
+		if (Number::size(left) != Number::size(right))
+			return Number::size(left) > Number::size(right);
+		else
+		{
+			bool temp;
+			for (L i = Number::size(left) - 1; i >= 0; i--)
+			{
+				if (left.body[i] > right.body[i])
+					return (left.sign ? true : false);
+				if (left.body[i] < right.body[i])
+					return (!left.sign ? true : false);
+			}
+		}
+	}
 	return false;
-}
+}//TEST  
 
 bool operator>=(const Number & left, const Number & right)
 {
-	return false;
-}
+	if (left.sign != right.sign)
+		return left.sign && !right.sign;
+	else
+	{
+		if (Number::size(left) != Number::size(right))
+			return Number::size(left) > Number::size(right);
+		else
+		{
+			bool temp;
+			for (L i = Number::size(left) - 1; i >= 0; i--)
+			{
+				if (left.body[i] > right.body[i])
+					return (left.sign ? true : false);
+				if (left.body[i] < right.body[i])
+					return (!left.sign ? true : false);
+			}
+		}
+	}
+	return true;
+}//TEST
 
 bool operator<(const Number & left, const Number & right)
 {
-	return false;
-}
+	if (left.sign != right.sign)
+		return right.sign && !left.sign;
+	else
+	{
+		if (Number::size(left) != Number::size(right))
+			return Number::size(left) < Number::size(right);
+			else
+			{
+				bool temp;
+				for (L i = Number::size(left) - 1; i >= 0; i--)
+				{
+					if (left.body[i] < right.body[i])
+						return (left.sign ? true : false);
+					if (left.body[i] > right.body[i])
+						return (!left.sign ? true : false);
+				}
+			}
+		}
+		return false; //for equality
+}//TEST
 
 bool operator<=(const Number & left, const Number & right)
 {
-	return false;
-}
+	if (left.sign != right.sign)
+		return right.sign && !left.sign;
+	else
+	{
+		if (Number::size(left) != Number::size(right))
+			return Number::size(left) < Number::size(right);
+		else
+		{
+			bool temp;
+			for (L i = Number::size(left) - 1; i >= 0; i--)
+			{
+				if (left.body[i] < right.body[i])
+					return (left.sign ? true : false);
+				if (left.body[i] > right.body[i])
+					return (!left.sign ? true : false);
+			}
+		}
+	}
+	return true; //for equality
+}//TEST
 
 bool operator==(const Number & left, const Number & right)
 {
+	if (Number::size(left) != Number::size(right))
+		return false;
+	if (left.sign != right.sign)
+		return false;
+
+	for (size_t i = 0; i < Number::size(left); i++)
+	{
+		if (left.body != right.body)
+			return false;
+	}
+	return true;
+}
+//TEST
+bool operator!=(const Number & left, const Number & right)
+{
+	if(Number::size(left) != Number::size(right))
+		return true;
+	if (left.sign != right.sign)
+		return true;
+
+	for (size_t i = 0; i < Number::size(left); i++)
+	{
+		if (left.body != right.body)
+			return true;
+	}
 	return false;
 }
-
+//TEST
 Number::Number()
-{}
-
-const U& Number::size()
+{
+	sign = true;
+	Cell a(0);
+	body.push_back(a);
+}
+//TEST
+U Number::size()
 {
 	return (this->body.size());
 }
-
+//TEST
+U Number::size(const Number& obj)
+{
+	return obj.body.size();
+}
+//TEST
 US Number::pull_num(U pos)
 {
 	return US();
-}
-
+}//TODO 
+ //TEST
 void Number::operator=(Number& obj)
 {
 	U obj_size = obj.size();
@@ -68,7 +174,7 @@ void Number::operator=(Number& obj)
 		this->body[i] = obj.body[i];
 	}
 }
-
+//TEST
 void Number::operator=(const LL& obj)
 {
 	LL temp = obj;
@@ -80,8 +186,7 @@ void Number::operator=(const LL& obj)
 		temp /= 1000;
 	}
 }
-
-
+//TEST
 std::ostream& operator <<(std::ostream& os, const Number& obj)
 {
 	Number a = obj;	 
@@ -100,3 +205,4 @@ std::ostream& operator <<(std::ostream& os, const Number& obj)
 		os << "0";
 	return os;
 }
+//TEST

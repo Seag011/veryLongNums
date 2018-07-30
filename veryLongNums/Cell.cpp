@@ -6,7 +6,7 @@ Cell operator+(Cell const& left, Cell const& right)
 	Cell result = (left.body + right.body);
 	return result;
 }
-//DONE:
+
 Cell operator-(Cell const& left, Cell const& right)
 {
 	if (left < right)
@@ -42,7 +42,7 @@ bool operator==(Cell const& left, Cell const& right)
 
 Cell::Cell()
 {
-	body = 0;
+	Cell(0);
 }
 
 void Cell::operator=(const U& right)

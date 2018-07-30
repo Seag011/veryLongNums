@@ -6,17 +6,19 @@ struct Number
 {
 public:
 	std::vector <Cell> body;
-	bool sign = true;
+	bool sign;
 	/* False - negative * 
 	 * true - positive  */
 				
 	Number();
 
-	const U& size();
+	U size();
+	static U size(const Number& obj);
 	US pull_num(U pos);
 	/* pos the left 
 	 * is the most biggest 
 	 */
+
 	
 	friend Number& operator + (const Number& left, const Number& right);
 	friend Number& operator - (const Number& left, const Number& right);
