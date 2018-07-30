@@ -1,9 +1,11 @@
 #pragma once
 struct Cell
 {
-	unsigned short body : 10;
-	Cell(US a) : body(a) {};
+	U body : 15;
+	Cell();
+	Cell(US a) : body(a){};
 	
+
 	friend Cell operator +  (const Cell& left, const Cell& right);
 	friend Cell operator -  (const Cell& left, const Cell& right);
 
