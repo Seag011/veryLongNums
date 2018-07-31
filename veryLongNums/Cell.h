@@ -8,6 +8,14 @@ struct Cell
 	friend Cell operator +  (const Cell& left, const Cell& right);
 	friend Cell operator -  (const Cell& left, const Cell& right);
 
+	friend Cell operator +  (const U& left, const Cell& right);
+	friend Cell operator +  (const Cell& right, const U& left);
+
+	friend Cell operator -  (const U& left, const Cell& right);
+
+	Cell operator +=  (const Cell& right);
+	Cell operator -= (const Cell& right);
+
 	friend bool operator >  (const Cell& left, const Cell& right);
 	friend bool operator >= (const Cell& left, const Cell& right);
 	friend bool operator <  (const Cell& left, const Cell& right);

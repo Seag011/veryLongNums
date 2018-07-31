@@ -15,6 +15,27 @@ Cell operator-(Cell const& left, Cell const& right)
 		return (left.body - right.body);
 }
 
+Cell operator+(const U& left, const Cell& right)
+{
+	Cell r;
+	r = right.body + left;
+	return r;
+}
+
+Cell operator+(const Cell& right, const U& left)
+{
+	Cell r;
+	r = right.body + left;
+	return r;
+}
+
+Cell operator-(const U& left, const Cell& right)
+{
+	Cell r;
+	r = right.body + left;
+	return r;
+}
+
 bool operator>(Cell const& left, Cell const& right)
 {
 	return (left.body > right.body);
@@ -43,6 +64,18 @@ bool operator==(Cell const& left, Cell const& right)
 Cell::Cell()
 {
 	Cell(0);
+}
+
+Cell Cell::operator+=(const Cell & right)
+{
+	this->body += right.body;
+	return *this;
+}
+
+Cell Cell::operator-=(const Cell & right)
+{
+	this->body -= right.body;
+	return *this;
 }
 
 void Cell::operator=(const U& right)

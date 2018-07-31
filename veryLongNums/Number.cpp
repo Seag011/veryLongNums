@@ -13,6 +13,8 @@ Number & operator+(const Number & left, const Number & right)
 	for(U i = 0; i < max; i++)
 	{
 		l.body[i] += r.body[i];
+		if (l.body[i - 1] > MAX_CELL && i > 0)
+			l.body += 1;
 	}
 	
 }//TODO
