@@ -12,7 +12,6 @@ public:
 				
 	Number();
 
-	U size();
 	static U size(const Number& obj);
 	US pull_num(U pos);
 	/* pos the left 
@@ -31,7 +30,7 @@ public:
 	friend bool operator <= (const Number& left, const Number& right);
 	friend bool operator == (const Number& left, const Number& right);
 
-	void operator = (Number& obj);
+	void operator = (const Number& obj);
 	void operator = (const LL& obj);
 	
 

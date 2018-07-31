@@ -4,6 +4,17 @@
 
 Number & operator+(const Number & left, const Number & right)
 {
+	Number l, r;
+	l = left;
+	r = right;
+	U max = std::max(Number::size(left), Number::size(right));
+	l.body.resize(max);
+	r.body.resize(max);
+	for(U i = 0; i < max; i++)
+	{
+		l.body[i] += r.body[i];
+	}
+	
 }//TODO
 
 Number & operator-(const Number & left, const Number & right)
@@ -42,8 +53,8 @@ bool operator>(const Number & left, const Number & right)
 		}
 	}
 	return false;
-}//TEST  
-
+}
+//TEST
 bool operator>=(const Number & left, const Number & right)
 {
 	if (left.sign != right.sign)
@@ -65,8 +76,8 @@ bool operator>=(const Number & left, const Number & right)
 		}
 	}
 	return true;
-}//TEST
-
+}
+//TEST
 bool operator<(const Number & left, const Number & right)
 {
 	if (left.sign != right.sign)
@@ -88,8 +99,8 @@ bool operator<(const Number & left, const Number & right)
 			}
 		}
 		return false; //for equality
-}//TEST
-
+}
+//TEST
 bool operator<=(const Number & left, const Number & right)
 {
 	if (left.sign != right.sign)
@@ -112,7 +123,7 @@ bool operator<=(const Number & left, const Number & right)
 	}
 	return true; //for equality
 }//TEST
-
+ //TEST
 bool operator==(const Number & left, const Number & right)
 {
 	if (Number::size(left) != Number::size(right))
@@ -150,11 +161,6 @@ Number::Number()
 	body.push_back(a);
 }
 //TEST
-U Number::size()
-{
-	return (this->body.size());
-}
-//TEST
 U Number::size(const Number& obj)
 {
 	return obj.body.size();
@@ -165,9 +171,9 @@ US Number::pull_num(U pos)
 	return US();
 }//TODO 
  //TEST
-void Number::operator=(Number& obj)
+void Number::operator=(const Number& obj)
 {
-	U obj_size = obj.size();
+	U obj_size = Number::size(obj);
 	for (size_t i = 0; i < obj_size; i++)
 	{
 		this->body.resize(obj_size);
@@ -190,7 +196,7 @@ void Number::operator=(const LL& obj)
 std::ostream& operator <<(std::ostream& os, const Number& obj)
 {
 	Number a = obj;	 
-	U obj_size = a.size();	
+	U obj_size = Number::size(obj);
 
 	if (obj_size != 0)
 	{
