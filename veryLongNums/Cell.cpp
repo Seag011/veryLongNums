@@ -31,8 +31,13 @@ Cell operator+(const Cell& right, const U& left)
 
 Cell operator-(const U& left, const Cell& right)
 {
-	Cell r;
-	r = right.body + left;
+	Cell r = Cell(left) - Cell(right.body);
+	return r;
+}
+
+Cell operator-(const Cell & right, const U & left)
+{
+	Cell r = Cell(right.body) - Cell(left);
 	return r;
 }
 
@@ -66,6 +71,26 @@ Cell::Cell()
 	Cell(0);
 }
 
+Cell Cell::operator+=(const U& right)
+{
+	return (*this + right);
+}
+
+Cell Cell::operator-=(const U& right)
+{
+	return (*this - right);
+}
+
+Cell Cell::operator%=(const U & right)
+{
+	return this->body % right;
+}
+
+Cell operator % (const Cell& left, const U& right)
+{
+	return Cell(left.body % right);
+}
+
 Cell Cell::operator+=(const Cell & right)
 {
 	this->body += right.body;
@@ -76,6 +101,11 @@ Cell Cell::operator-=(const Cell & right)
 {
 	this->body -= right.body;
 	return *this;
+}
+
+Cell Cell::operator%=(const Cell & right)
+{
+	return this->body % right.body;
 }
 
 void Cell::operator=(const U& right)

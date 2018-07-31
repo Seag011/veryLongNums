@@ -19,7 +19,7 @@ public:
 	 */
 
 	
-	friend Number& operator + (const Number& left, const Number& right);
+	friend Number& operator+  (const Number & left, const Number & right);
 	friend Number& operator - (const Number& left, const Number& right);
 	friend Number& operator * (const Number& left, const Number& right);
 	friend Number& operator / (const Number& left, const Number& right);
@@ -37,3 +37,6 @@ public:
 	friend std::ostream& operator <<(std::ostream& os, const Number obj);
 	
 };
+
+//add isNextInCell
+// NextInCell return a va;ue of Cell / 1000

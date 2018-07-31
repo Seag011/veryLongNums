@@ -14,16 +14,26 @@ Number & operator+(const Number & left, const Number & right)
 	{
 		l.body[i] += r.body[i];
 		if (l.body[i - 1] > MAX_CELL && i > 0)
-			l.body += 1;
+		{
+			l.body[i] += 1;
+			l.body[i] %= (MAX_CELL + 1);
+		}
+		else 
+			if (i == max - 1 && l.body[i] > MAX_CELL)
+			{
+				l.body.resize(max + 1);
+				l.body[i + 1] += 1;
+				l.body[i] %= (MAX_CELL + 1);
+			}
 	}
-	
-}//TODO
-
+	return l;
+}//UNDONE
+//TEST
 Number & operator-(const Number & left, const Number & right)
 {
 	// TODO: insert return statement here
-}//TODO
-
+}
+//TODO
 Number & operator*(const Number & left, const Number & right)
 {
 	// TODO: insert return statement here
@@ -44,7 +54,6 @@ bool operator>(const Number & left, const Number & right)
 			return Number::size(left) > Number::size(right);
 		else
 		{
-			bool temp;
 			for (L i = Number::size(left) - 1; i >= 0; i--)
 			{
 				if (left.body[i] > right.body[i])
@@ -67,7 +76,6 @@ bool operator>=(const Number & left, const Number & right)
 			return Number::size(left) > Number::size(right);
 		else
 		{
-			bool temp;
 			for (L i = Number::size(left) - 1; i >= 0; i--)
 			{
 				if (left.body[i] > right.body[i])
@@ -90,7 +98,6 @@ bool operator<(const Number & left, const Number & right)
 			return Number::size(left) < Number::size(right);
 			else
 			{
-				bool temp;
 				for (L i = Number::size(left) - 1; i >= 0; i--)
 				{
 					if (left.body[i] < right.body[i])
@@ -113,7 +120,6 @@ bool operator<=(const Number & left, const Number & right)
 			return Number::size(left) < Number::size(right);
 		else
 		{
-			bool temp;
 			for (L i = Number::size(left) - 1; i >= 0; i--)
 			{
 				if (left.body[i] < right.body[i])
@@ -124,7 +130,7 @@ bool operator<=(const Number & left, const Number & right)
 		}
 	}
 	return true; //for equality
-}//TEST
+}
  //TEST
 bool operator==(const Number & left, const Number & right)
 {
