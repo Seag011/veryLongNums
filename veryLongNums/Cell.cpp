@@ -22,10 +22,10 @@ Cell operator+(const U& left, const Cell& right)
 	return r;
 }
 
-Cell operator+(const Cell& right, const U& left)
+Cell operator+(const Cell& left, const U& right)
 {
 	Cell r;
-	r = right.body + left;
+	r = left.body + right;
 	return r;
 }
 
@@ -35,10 +35,25 @@ Cell operator-(const U& left, const Cell& right)
 	return r;
 }
 
-Cell operator-(const Cell & right, const U & left)
+Cell operator-(const Cell & left, const U & right)
 {
-	Cell r = Cell(right.body) - Cell(left);
+	Cell r = Cell(left.body) - Cell(right);
 	return r;
+}
+
+Cell operator/(const Cell& left, const Cell& right)
+{
+	return Cell(left.body / right.body);
+}
+
+Cell operator/(const U& left, const Cell& right)
+{
+	return Cell(left / right.body);
+}
+
+Cell operator/(const Cell& left, const U& right)
+{
+	return Cell(left.body / right);
 }
 
 bool operator>(Cell const& left, Cell const& right)

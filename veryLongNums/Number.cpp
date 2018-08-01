@@ -4,36 +4,62 @@
 
 Number & operator+(const Number & left, const Number & right)
 {
-	Number l, r;
+	static Number l;
+	Number r;
 	l = left;
 	r = right;
-	U max = std::max(Number::size(left), Number::size(right));
-	l.body.resize(max);
-	r.body.resize(max);
-	for(U i = 0; i < max; i++)
+	if (l.sign == r.sign)
 	{
-		l.body[i] += r.body[i];
-		if (l.body[i - 1] > MAX_CELL && i > 0)
+		U max = std::max(Number::size(left), Number::size(right));
+		l.body.resize(max);
+		r.body.resize(max);
+		for (U i = 0; i < max; i++)
 		{
-			l.body[i] += 1;
-			l.body[i] %= (MAX_CELL + 1);
-		}
-		else 
-			if (i == max - 1 && l.body[i] > MAX_CELL)
+			l.body[i] += r.body[i];
+			if (l.body[i] > MAX_CELL)
 			{
-				l.body.resize(max + 1);
-				l.body[i + 1] += 1;
-				l.body[i] %= (MAX_CELL + 1);
+				if (i < max - 1)
+				{
+					l.body[i + 1] += l.body[i] / TOP_BORDER;
+					l.body[i] %= TOP_BORDER;
+				}
+				else
+				{
+					l.body.push_back(l.body[i] / TOP_BORDER);
+					l.body[i] %= TOP_BORDER;
+				}
 			}
+		}
 	}
+	else
+		return (l - r);
 	return l;
-}//UNDONE
+}
 //TEST
 Number & operator-(const Number & left, const Number & right)
 {
-	// TODO: insert return statement here
+	Number r;
+	static Number l;
+	l = left;
+	if (Number::abs(left) < Number::abs(right))
+	{
+		Number temp = l;
+		l = r;
+		r = temp;
+	}
+	U max = std::max(Number::size(left), Number::size(right));
+	l.body.resize(max);
+	r.body.resize(max);
+	for(L i = max - 1; i >= 0; i--)
+	{
+		l.body[i] -= r.body[i];
+		if (l.body[i] < r.body[i])
+			l.body[i + 1] += 1;
+	}
+	l.normalize();
+	return l;
 }
-//TODO
+//TEST
 Number & operator*(const Number & left, const Number & right)
 {
 	// TODO: insert return statement here
@@ -168,6 +194,31 @@ Number::Number()
 	Cell a(0);
 	body.push_back(a);
 }
+
+Number::Number(const L & obj)
+{
+	L temp = obj;
+	if (obj < 0)
+	{
+		this->sign = false;
+		temp *= -1;
+	}
+	else
+		this->sign = true;
+
+	while (temp > 0)
+	{
+		this->body.push_back(Cell(temp % TOP_BORDER));
+		temp /= TOP_BORDER;
+	}
+}
+
+Number::Number(const L& obj, const bool& Sign)
+{
+	Number a(obj);
+	sign = Sign;
+}
+
 //TEST
 U Number::size(const Number& obj)
 {
@@ -177,8 +228,26 @@ U Number::size(const Number& obj)
 US Number::pull_num(U pos)
 {
 	return US();
-}//TODO 
- //TEST
+}
+
+void Number::normalize()
+{
+	for(L i = this->body.size() - 1; i >= 0; i--)
+	{
+		if (this->body[i] == 0)
+			this->body.erase(this->body.end());
+		else
+			break;
+	}
+}
+//TODO 
+Number Number::abs(const Number& obj)
+{
+	Number temp = obj;
+	temp.sign = true;
+	return temp;
+}
+//TEST
 void Number::operator=(const Number& obj)
 {
 	U obj_size = Number::size(obj);
