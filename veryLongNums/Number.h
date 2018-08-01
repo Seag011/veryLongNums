@@ -23,7 +23,7 @@ public:
 	static Number abs(const Number& obj);
 	static U size(const Number& obj);
 
-	friend Number& operator+  (const Number & left, const Number & right);
+	friend Number& operator + (const Number & left, const Number & right);
 	friend Number& operator - (const Number& left, const Number& right);
 	friend Number& operator * (const Number& left, const Number& right);
 	friend Number& operator / (const Number& left, const Number& right);
@@ -37,9 +37,12 @@ public:
 	void operator = (const Number& obj);
 	void operator = (const LL& obj);
 	
+	Number& operator += (const Number & right);
 
 	friend std::ostream& operator <<(std::ostream& os, const Number obj);
 	
+private:
+	void insertCell(const Cell& obj);
 };
 
 //add isNextInCell

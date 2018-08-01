@@ -62,7 +62,30 @@ Number & operator-(const Number & left, const Number & right)
 //TEST
 Number & operator*(const Number & left, const Number & right)
 {
-	// TODO: insert return statement here
+	Number result(0), l, r;
+	l = left;
+	r = right;
+	U max_size = l.body.size() * r.body.size();
+	result.body.resize(max_size);
+
+	U temp;
+	for (L i = 0; i < r.body.size(); i++)
+	{
+		Number current(0);
+		current.body.resize(max_size);
+		for (L j = 0; j < l.body.size(); j++)
+		{
+			U temp = r.body[i].body * l.body[j].body;
+			current.body[i] += temp % TOP_BORDER;
+			current.body[i+1] += temp / TOP_BORDER;
+		}
+		for (L j = 0; j < i; j++)
+			current.insertCell(Cell(0));
+		current.normalize();
+		result += current;
+	}
+	result.normalize();
+	return result;
 }//TODO
 
 Number & operator/(const Number & left, const Number & right)
@@ -269,6 +292,11 @@ void Number::operator=(const LL& obj)
 		temp /= 1000;
 	}
 }
+
+Number & Number::operator+=(const Number & right)
+{
+	*this = *this + right;
+}
 //TEST
 std::ostream& operator <<(std::ostream& os, const Number& obj)
 {
@@ -289,3 +317,11 @@ std::ostream& operator <<(std::ostream& os, const Number& obj)
 	return os;
 }
 //TEST
+
+void Number::insertCell(const Cell& obj)
+{
+	this->body.resize(this->body.size() + 1);
+	for (L i = this->body.size(); i > 0; i--)
+		this->body[i] = this->body[i - 1];
+	this->body[0] = obj;
+}
