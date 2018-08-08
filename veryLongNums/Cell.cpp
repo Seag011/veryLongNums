@@ -56,6 +56,11 @@ Cell operator/(const Cell& left, const U& right)
 	return Cell(left.body / right);
 }
 
+Cell operator % (const Cell& left, const U& right)
+{
+	return Cell(left.body % right);
+}
+
 bool operator>(Cell const& left, Cell const& right)
 {
 	return (left.body > right.body);
@@ -86,41 +91,28 @@ Cell::Cell()
 	Cell(0);
 }
 
-Cell Cell::operator+=(const U& right)
+Cell& Cell::operator+=(const U& right)
 {
-	return (*this + right);
+	
 }
 
-Cell Cell::operator-=(const U& right)
+Cell& Cell::operator-=(const U& right)
 {
-	return (*this - right);
 }
 
-Cell Cell::operator%=(const U & right)
+Cell& Cell::operator%=(const U & right)
 {
-	return this->body % right;
 }
 
-Cell operator % (const Cell& left, const U& right)
+Cell& Cell::operator+=(const Cell & right)
 {
-	return Cell(left.body % right);
 }
 
-Cell Cell::operator+=(const Cell & right)
+Cell& Cell::operator-=(const Cell & right)
 {
-	this->body += right.body;
-	return *this;
-}
 
-Cell Cell::operator-=(const Cell & right)
+Cell& Cell::operator%=(const Cell & right)
 {
-	this->body -= right.body;
-	return *this;
-}
-
-Cell Cell::operator%=(const Cell & right)
-{
-	return this->body % right.body;
 }
 
 void Cell::operator=(const U& right)

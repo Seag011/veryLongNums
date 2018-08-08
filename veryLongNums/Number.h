@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "Cell.h"
 
-struct Number
+struct Number : public Cell
 {
 public:
 	std::vector <Cell> body;

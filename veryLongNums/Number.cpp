@@ -316,8 +316,7 @@ std::ostream& operator <<(std::ostream& os, const Number& obj)
 		os << "0";
 	return os;
 }
-//TEST
-
+//TESÅ
 void Number::insertCell(const Cell& obj)
 {
 	this->body.resize(this->body.size() + 1);
