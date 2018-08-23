@@ -1,66 +1,139 @@
 #include "stdafx.h"
 #include "Cell.h"
-
+/*===========================================================*/
 Cell operator+(Cell const& left, Cell const& right)
 {
-	Cell result = (left.body + right.body);
+	Cell result;
+	result = left.body + right.body;
 	return result;
-}
-
-Cell operator-(Cell const& left, Cell const& right)
-{
-	if (left < right)
-		return (MAX_CELL + 1 + left.body) - right.body;
-	else 
-		return (left.body - right.body);
 }
 
 Cell operator+(const U& left, const Cell& right)
 {
-	Cell r;
-	r = right.body + left;
-	return r;
+	Cell result;
+	result = right.body + left;
+	return result;
 }
 
 Cell operator+(const Cell& left, const U& right)
 {
-	Cell r;
-	r = left.body + right;
-	return r;
+	Cell result;
+	result = left.body + right;
+	return result;
+}
+
+Cell& Cell::operator+=(const Cell& right)
+{
+	*this = *this + right;
+	return *this;
+}
+
+Cell& Cell::operator+=(const U& right)
+{
+	*this = *this + right;
+	return *this;
+}
+/*===========================================================*/
+Cell operator-(Cell const& left, Cell const& right)
+{
+	Cell result;
+	if (left < right)
+		result = (left.body - right.body)+ TOP_BORDER;
+	else 
+		result = (left.body - right.body);
+	return result;
 }
 
 Cell operator-(const U& left, const Cell& right)
 {
-	Cell r = Cell(left) - Cell(right.body);
-	return r;
+	Cell result = Cell(left) - Cell(right.body);
+	return result;
 }
 
 Cell operator-(const Cell & left, const U & right)
 {
-	Cell r = Cell(left.body) - Cell(right);
-	return r;
+	Cell result = Cell(left.body) - Cell(right);
+	return result;
 }
 
+Cell& Cell::operator-=(const Cell& right)
+{
+	*this = *this - right;
+	return *this;
+}
+
+Cell& Cell::operator-=(const U& right)
+{
+	*this = *this - right;
+	return *this;
+}
+/*===========================================================*/
 Cell operator/(const Cell& left, const Cell& right)
 {
-	return Cell(left.body / right.body);
+	Cell result;
+	result = left.body / right.body;
+	return result;
 }
 
 Cell operator/(const U& left, const Cell& right)
 {
-	return Cell(left / right.body);
+	Cell result;
+	result = (left / right.body);
+	return result;
 }
 
 Cell operator/(const Cell& left, const U& right)
 {
-	return Cell(left.body / right);
+	Cell result;
+	result = Cell(left.body / right);
+	return result;
 }
 
-Cell operator % (const Cell& left, const U& right)
+Cell& Cell::operator/=(const Cell& right)
 {
-	return Cell(left.body % right);
+	*this = *this / right;
+	return *this;
 }
 
+Cell& Cell::operator/=(const U& right)
+{
+	*this = *this / right;
+	return *this;
+}
+/*===========================================================*/
+Cell operator % (const Cell& left, const Cell& right)
+{
+	Cell result;
+	result = left.body % right.body;
+	return result;
+}
+
+Cell operator % (const U& left, const Cell& right)
+{
+	Cell result;
+	result = left % right.body;
+	return result;
+}
+
+Cell operator % (const Cell & left, const U & right)
+{
+	Cell result;
+	result = left.body % right;
+	return result;
+}
+
+Cell& Cell::operator%=(const Cell & right)
+{
+	*this = *this % right;
+	return *this;
+}
+
+Cell& Cell::operator%=(const U & right)
+{
+	*this = *this % right;
+	return *this;
+}
+/*===========================================================*/
 bool operator>(Cell const& left, Cell const& right)
 {
 	return (left.body > right.body);
@@ -85,44 +158,18 @@ bool operator==(Cell const& left, Cell const& right)
 {
 	return (left.body == right.body);
 }
+/*===========================================================*/
 
-Cell::Cell()
-{
-	Cell(0);
-}
-
-Cell& Cell::operator+=(const U& right)
-{
-	
-}
-
-Cell& Cell::operator-=(const U& right)
-{
-}
-
-Cell& Cell::operator%=(const U & right)
-{
-}
-
-Cell& Cell::operator+=(const Cell & right)
-{
-}
-
-Cell& Cell::operator-=(const Cell & right)
-{
-
-Cell& Cell::operator%=(const Cell & right)
-{
-}
-
-void Cell::operator=(const U& right)
+Cell Cell::operator=(const U& right)
 {
 	this->body = right;
+	return *this;
 }
 
-void Cell::operator=(Cell const& right)
+Cell Cell::operator=(Cell const& right)
 {
 	this->body = right.body;
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& obj)
@@ -130,4 +177,13 @@ std::ostream& operator<<(std::ostream& os, const Cell& obj)
 	os << obj.body;
 	return os;
 }
-//DONE ALL!------------------------------------------------------
+
+Cell::Cell()
+{
+	Cell(0);
+}
+
+Cell::Cell(U a) 
+: body(a)
+{}
+/*=====================-{DONE ALL}-==========================*/

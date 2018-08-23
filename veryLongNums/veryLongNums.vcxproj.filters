@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Test">
-      <UniqueIdentifier>{3275ee84-f529-44dd-8345-d0993b3f9e0f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -61,9 +58,6 @@
     </ClCompile>
     <ClCompile Include="Number.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cell.Test.cpp">
-      <Filter>Test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
