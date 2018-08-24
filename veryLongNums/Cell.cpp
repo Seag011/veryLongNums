@@ -134,6 +134,7 @@ Cell& Cell::operator%=(const U & right)
 	return *this;
 }
 /*===========================================================*/
+
 bool operator>(Cell const& left, Cell const& right)
 {
 	return (left.body > right.body);
@@ -158,7 +159,71 @@ bool operator==(Cell const& left, Cell const& right)
 {
 	return (left.body == right.body);
 }
-/*===========================================================*/
+
+bool operator!=(const Cell& left, const Cell& right)
+{
+	return (left.body != right.body);
+}
+/*-----------------------------------------------------------------*/
+bool operator>(const Cell& left, const U& right)
+{
+	return (left.body > right);
+}
+
+bool operator>=(const Cell& left, const U& right)
+{
+	return (left.body >= right);
+}
+
+bool operator<(const Cell& left, const U& right)
+{
+	return (left.body < right);
+}
+
+bool operator<=(const Cell& left, const U& right)
+{
+	return (left.body <= right);
+}
+
+bool operator==(const Cell& left, const U& right)
+{
+	return (left.body == right);
+}
+
+bool operator!=(const Cell& left, const U& right)
+{
+	return (left.body != right);
+}
+/*-----------------------------------------------------------------*/
+bool operator>(const U& left, const Cell& right)
+{
+	return (left > right.body);
+}
+
+bool operator>=(const U& left, const Cell& right)
+{
+	return (left >= right.body);
+}
+
+bool operator<(const U& left, const Cell& right)
+{
+	return (left < right.body);
+}
+
+bool operator<=(const U& left, const Cell& right)
+{
+	return (left <= right.body);
+}
+
+bool operator==(const U& left, const Cell& right)
+{
+	return (left == right.body);
+}
+bool operator!=(const U& left, const Cell& right)
+{
+	return (left != right.body);
+}
+/*=================================================================*/
 
 Cell Cell::operator=(const U& right)
 {
