@@ -2,31 +2,118 @@
 #include "Number.h"
 #include <algorithm>
 
-Number & operator+(const Number & left, const Number & right)
+U static setMaxOfTwoSizes(Number& first, Number& second)
+{
+	U max = std::max(Number::size(first), Number::size(second));
+	first.number.resize(max);
+	second.number.resize(max);
+	return max;
+}
+
+void Number::insertLowerDigitCell(const Cell& obj)
+{
+	this->number.resize(this->number.size() + 1);
+	for (LL i = this->number.size(); i > 0; i--)
+		this->number[i] = this->number[i - 1];
+	this->number[0] = obj;
+}
+
+void Number::normalize()
+{
+	for (LL i = this->number.size() - 1; i >= 0; i--)
+	{
+		if (this->number[i] == 0)
+			this->number.erase(this->number.end());
+		else
+			break;
+	}
+	if (this->number.size() == 0)
+		this->sign = true;
+}
+void Number::swapIsLess(Number & left, Number & right)
+{
+	if (Number::abs(left) < Number::abs(right))
+	{
+		Number temp = left;
+		left = right;
+		right = temp;
+	}
+}
+//TODO 
+
+Number::Number()
+{
+	sign = true;
+	Cell a(0);
+	number.push_back(a);
+}
+
+Number::Number(const LL& obj)
+{
+	LL temp = obj;
+	if (obj < 0)
+	{
+		this->sign = false;
+		temp *= -1;
+	}
+	else
+		this->sign = true;
+
+	while (temp > 0)
+	{
+		this->number.push_back(Cell(temp % TOP_BORDER));
+		temp /= TOP_BORDER;
+	}
+}
+
+Number::Number(const LL& obj, const bool& Sign)
+{
+	Number a(obj);
+	sign = Sign;
+}
+
+//TEST
+LL Number::size(const Number& obj)
+{
+	return obj.number.size();
+}
+//TEST
+US Number::pull_num(U pos)
+{
+	return US();
+}
+//UNDONE
+Number Number::abs(const Number& obj)
+{
+	Number temp = obj;
+	temp.sign = true;
+	return temp;
+}
+//TEST
+/*=================================================================*/
+Number& operator+(const Number& left, const Number& right)
 {
 	static Number l;
 	Number r;
-	l = left;
-	r = right;
-	if (l.sign == r.sign)
-	{
-		U max = std::max(Number::size(left), Number::size(right));
-		l.body.resize(max);
-		r.body.resize(max);
-		for (U i = 0; i < max; i++)
+	if (left.sign == right.sign)
+	{	
+		l = left;
+		r = right;
+		LL max = setMaxOfTwoSizes(l, r);
+		for (LL i = 0; i < max; i++)
 		{
-			l.body[i] += r.body[i];
-			if (l.body[i] > MAX_CELL)
+			l.number[i] += r.number[i];
+			if (l.number[i] > MAX_CELL)
 			{
 				if (i < max - 1)
 				{
-					l.body[i + 1] += l.body[i] / TOP_BORDER;
-					l.body[i] %= TOP_BORDER;
+					l.number[i + 1] += l.number[i] / TOP_BORDER;
+					l.number[i] %= TOP_BORDER;
 				}
 				else
 				{
-					l.body.push_back(l.body[i] / TOP_BORDER);
-					l.body[i] %= TOP_BORDER;
+					l.number.push_back(l.number[i] / TOP_BORDER);
+					l.number[i] %= TOP_BORDER;
 				}
 			}
 		}
@@ -36,53 +123,61 @@ Number & operator+(const Number & left, const Number & right)
 	return l;
 }
 //TEST
-Number & operator-(const Number & left, const Number & right)
+Number& operator-(const Number& left, const Number& right)
 {
-	Number r;
 	static Number l;
-	l = left;
-	if (Number::abs(left) < Number::abs(right))
+	Number r;
+	//---------
+	if (left.sign != right.sign)
 	{
-		Number temp = l;
-		l = r;
-		r = temp;
+		if (Number::abs(left) < Number::abs(right))
+		{
+			Number temp = l;
+			l = r;
+			r = temp;
+		}
+		//TODO: put into swapIsLess()
+	
+
+		LL max = setMaxOfTwoSizes(l, r);
+
+		for (LL i = max - 1; i >= 0; i--)
+		{
+			l.number[i] -= r.number[i];
+			if (l.number[i] < r.number[i])
+				l.number[i + 1] += 1;
+		}
+		l.normalize();
 	}
-	U max = std::max(Number::size(left), Number::size(right));
-	l.body.resize(max);
-	r.body.resize(max);
-	for(L i = max - 1; i >= 0; i--)
-	{
-		l.body[i] -= r.body[i];
-		if (l.body[i] < r.body[i])
-			l.body[i + 1] += 1;
-	}
-	l.normalize();
+	else 
+		return (l + r);
 	return l;
 }
 //TEST
-Number & operator*(const Number & left, const Number & right)
+Number& operator*(const Number& left, const Number& right)
 {
-	Number result;
+	static Number result;
 	Number l;
 	Number r;
 	l = left;
 	r = right;
-	U max_size = l.body.size() * r.body.size();
-	result.body.resize(max_size);
 
-	U temp;
-	for (L i = 0; i < r.body.size(); i++)
+	LL max_size = l.number.size() * r.number.size();
+	result.number.resize(max_size);
+
+	for (LL i = 0; i < r.number.size(); i++)
 	{
 		Number current(0);
-		current.body.resize(max_size);
-		for (L j = 0; j < l.body.size(); j++)
+		current.number.resize(max_size);
+		for (LL j = 0; j < l.number.size(); j++)
 		{
-			U temp = r.body[i].body * l.body[j].body;
-			current.body[i] += temp % TOP_BORDER;
-			current.body[i+1] += temp / TOP_BORDER;
+			LL temp = r.number[i].cell * l.number[j].cell;
+			current.number[i] += temp % TOP_BORDER;
+			current.number[i+1] += temp / TOP_BORDER;
 		}
-		for (L j = 0; j < i; j++)
-			current.insertCell(Cell(0));
+		for (LL j = 0; j < i; j++)
+			current.insertLowerDigitCell(Cell(0));
+
 		current.normalize();
 		result += current;
 	}
@@ -90,13 +185,51 @@ Number & operator*(const Number & left, const Number & right)
 	return result;
 }//TODO
 
-Number & operator/(const Number & left, const Number & right)
+Number& operator/(const Number& left, const Number& right)
 {
-	// TODO: insert return statement here
+	static Number result(0);
+	Number l = left;
+	Number r = right;
+	if (Number::abs(l) > Number::abs(r))
+	{
+		if (l == r)
+			result = 1;
+		else
+		{
+			//ищем делитель делением на отрезки вдвое меньшей длины
+			U sizeOfResult = l.number.size() - r.number.size();
+			ULL compareHighBorder = pow(10, sizeOfResult) - 1;
+			ULL compareLowBorder = (compareHighBorder + 1) / 10;
+			while(compareHighBorder - compareLowBorder > 1)
+			{
+				// доделать если верхнаяя граница и результат будет равен 
+				Number temp = (Number)(compareHighBorder)* r;
+				if (temp > l)
+					compareHighBorder = (compareHighBorder + compareLowBorder) / 2;
+				else
+					if (temp == l)
+						result = compareHighBorder;
+						else
+							compareLowBorder = 
+							(compareHighBorder + compareLowBorder) / 2;
+			}
+			result = compareLowBorder;
+		}
+	}
+	if (l.sign != r.sign)
+		result.sign = false;
+	else
+		result.sign = l.sign;
+	return result;
 }//TODO
 
 Number& operator%(const Number& left, const Number& right)
 {
+	static Number result(0);
+	Number l = left;
+	Number r = right;
+	l /= r;
+	return  left - l;
 }//TODO
 
 Number& operator+(const Number& left, const LL& right)
@@ -159,7 +292,7 @@ Number& operator%(const LL& left, const Number& right)
 	return _left % right;
 }
 /*=================================================================*/
-bool operator>(const Number & left, const Number & right)
+bool operator>(const Number& left, const Number& right)
 {
 	if (left.sign != right.sign)
 		return left.sign && !right.sign;
@@ -169,11 +302,11 @@ bool operator>(const Number & left, const Number & right)
 			return Number::size(left) > Number::size(right);
 		else
 		{
-			for (L i = Number::size(left) - 1; i >= 0; i--)
+			for (LL i = Number::size(left) - 1; i >= 0; i--)
 			{
-				if (left.body[i] > right.body[i])
+				if (left.number[i] > right.number[i])
 					return (left.sign ? true : false);
-				if (left.body[i] < right.body[i])
+				if (left.number[i] < right.number[i])
 					return (!left.sign ? true : false);
 			}
 		}
@@ -181,7 +314,7 @@ bool operator>(const Number & left, const Number & right)
 	return false;
 }
 //TEST
-bool operator>=(const Number & left, const Number & right)
+bool operator>=(const Number& left, const Number& right)
 {
 	if (left.sign != right.sign)
 		return left.sign && !right.sign;
@@ -191,11 +324,11 @@ bool operator>=(const Number & left, const Number & right)
 			return Number::size(left) > Number::size(right);
 		else
 		{
-			for (L i = Number::size(left) - 1; i >= 0; i--)
+			for (LL i = Number::size(left) - 1; i >= 0; i--)
 			{
-				if (left.body[i] > right.body[i])
+				if (left.number[i] > right.number[i])
 					return (left.sign ? true : false);
-				if (left.body[i] < right.body[i])
+				if (left.number[i] < right.number[i])
 					return (!left.sign ? true : false);
 			}
 		}
@@ -203,7 +336,7 @@ bool operator>=(const Number & left, const Number & right)
 	return true;
 }
 //TEST
-bool operator<(const Number & left, const Number & right)
+bool operator<(const Number& left, const Number& right)
 {
 	if (left.sign != right.sign)
 		return right.sign && !left.sign;
@@ -213,11 +346,11 @@ bool operator<(const Number & left, const Number & right)
 			return Number::size(left) < Number::size(right);
 			else
 			{
-				for (L i = Number::size(left) - 1; i >= 0; i--)
+				for (LL i = Number::size(left) - 1; i >= 0; i--)
 				{
-					if (left.body[i] < right.body[i])
+					if (left.number[i] < right.number[i])
 						return (left.sign ? true : false);
-					if (left.body[i] > right.body[i])
+					if (left.number[i] > right.number[i])
 						return (!left.sign ? true : false);
 				}
 			}
@@ -225,7 +358,7 @@ bool operator<(const Number & left, const Number & right)
 		return false; //for equality
 }
 //TEST
-bool operator<=(const Number & left, const Number & right)
+bool operator<=(const Number& left, const Number& right)
 {
 	if (left.sign != right.sign)
 		return right.sign && !left.sign;
@@ -235,11 +368,11 @@ bool operator<=(const Number & left, const Number & right)
 			return Number::size(left) < Number::size(right);
 		else
 		{
-			for (L i = Number::size(left) - 1; i >= 0; i--)
+			for (LL i = Number::size(left) - 1; i >= 0; i--)
 			{
-				if (left.body[i] < right.body[i])
+				if (left.number[i] < right.number[i])
 					return (left.sign ? true : false);
-				if (left.body[i] > right.body[i])
+				if (left.number[i] > right.number[i])
 					return (!left.sign ? true : false);
 			}
 		}
@@ -247,16 +380,16 @@ bool operator<=(const Number & left, const Number & right)
 	return true; //for equality
 }
  //TEST
-bool operator==(const Number & left, const Number & right)
+bool operator==(const Number& left, const Number& right)
 {
 	if (Number::size(left) != Number::size(right))
 		return false;
 	if (left.sign != right.sign)
 		return false;
 
-	for (size_t i = 0; i < Number::size(left); i++)
+	for (LL i = 0; i < Number::size(left); i++)
 	{
-		if (left.body != right.body)
+		if (left.number != right.number)
 			return false;
 	}
 	return true;
@@ -312,105 +445,48 @@ bool operator==(const LL& left, const Number& right)
 	return (Number(left) == right);
 }
 //TEST
-bool operator!=(const Number & left, const Number & right)
+bool operator!=(const Number& left, const Number& right)
 {
 	if (Number::size(left) != Number::size(right))
 		return true;
 	if (left.sign != right.sign)
 		return true;
 
-	for (size_t i = 0; i < Number::size(left); i++)
+	for (LL i = 0; i < Number::size(left); i++)
 	{
-		if (left.body != right.body)
+		if (left.number != right.number)
 			return true;
 	}
 	return false;
 }
 //TEST
 /*=================================================================*/
-Number::Number()
-{
-	sign = true;
-	Cell a(0);
-	body.push_back(a);
-}
 
-Number::Number(const LL& obj)
+Number& Number::operator = (const Number& obj)
 {
-	LL temp = obj;
-	if (obj < 0)
+	LL obj_size = Number::size(obj);
+	for (LL i = 0; i < obj_size; i++)
 	{
-		this->sign = false;
-		temp *= -1;
+		this->number.resize(obj_size);
+		this->number[i] = obj.number[i];
 	}
-	else
-		this->sign = true;
-
-	while (temp > 0)
-	{
-		this->body.push_back(Cell(temp % TOP_BORDER));
-		temp /= TOP_BORDER;
-	}
-}
-
-Number::Number(const LL& obj, const bool& Sign)
-{
-	Number a(obj);
-	sign = Sign;
-}
-
-//TEST
-U Number::size(const Number& obj)
-{
-	return obj.body.size();
+	return *this;
 }
 //TEST
-US Number::pull_num(U pos)
-{
-	return US();
-}
-
-void Number::normalize()
-{
-	for(L i = this->body.size() - 1; i >= 0; i--)
-	{
-		if (this->body[i] == 0)
-			this->body.erase(this->body.end());
-		else
-			break;
-	}
-}
-//TODO 
-Number Number::abs(const Number& obj)
-{
-	Number temp = obj;
-	temp.sign = true;
-	return temp;
-}
-//TEST
-void Number::operator = (const Number& obj)
-{
-	U obj_size = Number::size(obj);
-	for (size_t i = 0; i < obj_size; i++)
-	{
-		this->body.resize(obj_size);
-		this->body[i] = obj.body[i];
-	}
-}
-//TEST
-void Number::operator = (const LL& obj)
+Number& Number::operator = (const LL& obj)
 {
 	LL temp = obj;
 	if (temp < 0)
 		this->sign = false;
 	while (temp > 0)
 	{
-		//this->body.push_back(temp % 1000);
+		//this->number.push_back(temp % 1000);
 		temp /= 1000;
 	}
+	return *this;
 }
 
-Number & Number::operator += (const Number & right)
+Number& Number::operator += (const Number& right)
 {
 	*this = *this + right;
 	return *this;
@@ -480,20 +556,13 @@ std::ostream& operator << (std::ostream& os, const Number& obj)
 	{
 		if (!a.sign)
 			os << "-";
-		for (L i = obj_size - 1; i >= 0; i--)
+		for (LL i = obj_size - 1; i >= 0; i--)
 		{
-			os << obj.body[i]; 
+			os << obj.number[i]; 
 		}
 	}
 	else
 		os << "0";
 	return os;
 }
-//TESЕ
-void Number::insertCell(const Cell& obj)
-{
-	this->body.resize(this->body.size() + 1);
-	for (L i = this->body.size(); i > 0; i--)
-		this->body[i] = this->body[i - 1];
-	this->body[0] = obj;
-}
+//TEST

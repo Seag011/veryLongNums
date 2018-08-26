@@ -4,12 +4,25 @@
 
 struct Number : public Cell
 {
+private:
+	U static setMaxOfTwoSizes(Number& first, Number& second);
+	void insertLowerDigitCell(const Cell& obj);
+	void normalize();
+	void swapIsLess(Number& left, Number& right);
 public:
-	std::vector <Cell> body;
-	/* true - positive 
-	*  false - nagative  */
+	std::vector <Cell> number;
+	/**
+	 * \brief
+	 * true - positive;
+	 *  false - nagative  */
 	bool sign = true;
 	
+	//pos the left is the most biggest
+	US pull_num(U pos);
+
+	static Number abs(const Number& obj);
+	static LL size(const Number& obj);
+	//UNDONE
 				
 	Number();
 	Number(const LL& obj);
@@ -33,15 +46,15 @@ public:
 	friend Number& operator / (const LL& left, const Number& right);
 	friend Number& operator % (const LL& left, const Number& right);
 
-	void operator = (const Number& obj);
-	void operator = (const LL& obj);
-
+	
+	Number& operator =  (const Number& obj);
 	Number& operator += (const Number& right);
 	Number& operator -= (const Number& right);
 	Number& operator *= (const Number& right);
 	Number& operator /= (const Number& right);
 	Number& operator %= (const Number& right);
 
+	Number& operator =  (const LL& obj);
 	Number& operator += (const LL& right);
 	Number& operator -= (const LL& right);
 	Number& operator *= (const LL& right);
@@ -67,17 +80,4 @@ public:
 	friend bool operator == (const LL& left, const Number& right);
 
 	friend std::ostream& operator <<(std::ostream& os, const Number& obj);
-
-	//pos the left is the most biggest
-	US pull_num(U pos);
-
-	void normalize();
-	static Number abs(const Number& obj);
-	static U size(const Number& obj);
-	
-private:
-	void insertCell(const Cell& obj);
 };
-
-//add isNextInCell
-// NextInCell return a va;ue of Cell / 1000

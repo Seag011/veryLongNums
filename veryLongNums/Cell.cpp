@@ -4,21 +4,21 @@
 Cell operator+(Cell const& left, Cell const& right)
 {
 	Cell result;
-	result = left.body + right.body;
+	result = left.cell + right.cell;
 	return result;
 }
 
 Cell operator+(const U& left, const Cell& right)
 {
 	Cell result;
-	result = right.body + left;
+	result = right.cell + left;
 	return result;
 }
 
 Cell operator+(const Cell& left, const U& right)
 {
 	Cell result;
-	result = left.body + right;
+	result = left.cell + right;
 	return result;
 }
 
@@ -38,21 +38,21 @@ Cell operator-(Cell const& left, Cell const& right)
 {
 	Cell result;
 	if (left < right)
-		result = (left.body - right.body)+ TOP_BORDER;
+		result = (left.cell - right.cell)+ TOP_BORDER;
 	else 
-		result = (left.body - right.body);
+		result = (left.cell - right.cell);
 	return result;
 }
 
 Cell operator-(const U& left, const Cell& right)
 {
-	Cell result = Cell(left) - Cell(right.body);
+	Cell result = Cell(left) - Cell(right.cell);
 	return result;
 }
 
 Cell operator-(const Cell & left, const U & right)
 {
-	Cell result = Cell(left.body) - Cell(right);
+	Cell result = Cell(left.cell) - Cell(right);
 	return result;
 }
 
@@ -71,21 +71,21 @@ Cell& Cell::operator-=(const U& right)
 Cell operator/(const Cell& left, const Cell& right)
 {
 	Cell result;
-	result = left.body / right.body;
+	result = left.cell / right.cell;
 	return result;
 }
 
 Cell operator/(const U& left, const Cell& right)
 {
 	Cell result;
-	result = (left / right.body);
+	result = (left / right.cell);
 	return result;
 }
 
 Cell operator/(const Cell& left, const U& right)
 {
 	Cell result;
-	result = Cell(left.body / right);
+	result = Cell(left.cell / right);
 	return result;
 }
 
@@ -104,21 +104,21 @@ Cell& Cell::operator/=(const U& right)
 Cell operator % (const Cell& left, const Cell& right)
 {
 	Cell result;
-	result = left.body % right.body;
+	result = left.cell % right.cell;
 	return result;
 }
 
 Cell operator % (const U& left, const Cell& right)
 {
 	Cell result;
-	result = left % right.body;
+	result = left % right.cell;
 	return result;
 }
 
 Cell operator % (const Cell & left, const U & right)
 {
 	Cell result;
-	result = left.body % right;
+	result = left.cell % right;
 	return result;
 }
 
@@ -137,109 +137,109 @@ Cell& Cell::operator%=(const U & right)
 
 bool operator>(Cell const& left, Cell const& right)
 {
-	return (left.body > right.body);
+	return (left.cell > right.cell);
 }
 
 bool operator>=(Cell const& left, Cell const& right)
 {
-	return (left.body >= right.body);
+	return (left.cell >= right.cell);
 }
 
 bool operator<(Cell const& left, Cell const& right)
 {
-	return (left.body < right.body);
+	return (left.cell < right.cell);
 }
 
 bool operator<=(Cell const& left, Cell const& right)
 {
-	return (left.body <= right.body);
+	return (left.cell <= right.cell);
 }
 
 bool operator==(Cell const& left, Cell const& right)
 {
-	return (left.body == right.body);
+	return (left.cell == right.cell);
 }
 
 bool operator!=(const Cell& left, const Cell& right)
 {
-	return (left.body != right.body);
+	return (left.cell != right.cell);
 }
 /*-----------------------------------------------------------------*/
 bool operator>(const Cell& left, const U& right)
 {
-	return (left.body > right);
+	return (left.cell > right);
 }
 
 bool operator>=(const Cell& left, const U& right)
 {
-	return (left.body >= right);
+	return (left.cell >= right);
 }
 
 bool operator<(const Cell& left, const U& right)
 {
-	return (left.body < right);
+	return (left.cell < right);
 }
 
 bool operator<=(const Cell& left, const U& right)
 {
-	return (left.body <= right);
+	return (left.cell <= right);
 }
 
 bool operator==(const Cell& left, const U& right)
 {
-	return (left.body == right);
+	return (left.cell == right);
 }
 
 bool operator!=(const Cell& left, const U& right)
 {
-	return (left.body != right);
+	return (left.cell != right);
 }
 /*-----------------------------------------------------------------*/
 bool operator>(const U& left, const Cell& right)
 {
-	return (left > right.body);
+	return (left > right.cell);
 }
 
 bool operator>=(const U& left, const Cell& right)
 {
-	return (left >= right.body);
+	return (left >= right.cell);
 }
 
 bool operator<(const U& left, const Cell& right)
 {
-	return (left < right.body);
+	return (left < right.cell);
 }
 
 bool operator<=(const U& left, const Cell& right)
 {
-	return (left <= right.body);
+	return (left <= right.cell);
 }
 
 bool operator==(const U& left, const Cell& right)
 {
-	return (left == right.body);
+	return (left == right.cell);
 }
 bool operator!=(const U& left, const Cell& right)
 {
-	return (left != right.body);
+	return (left != right.cell);
 }
 /*=================================================================*/
 
-Cell Cell::operator=(const U& right)
+Cell& Cell::operator=(const U& right)
 {
-	this->body = right;
+	this->cell = right;
 	return *this;
 }
 
-Cell Cell::operator=(Cell const& right)
+Cell& Cell::operator=(Cell const& right)
 {
-	this->body = right.body;
+	this->cell = right.cell;
 	return *this;
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& obj)
 {
-	os << obj.body;
+	os << obj.cell;
 	return os;
 }
 
@@ -249,6 +249,6 @@ Cell::Cell()
 }
 
 Cell::Cell(U a) 
-: body(a)
+: cell(a)
 {}
 /*=====================-{DONE ALL}-==========================*/

@@ -1,7 +1,7 @@
 #pragma once
 struct Cell
 {
-	US body : 15; //to 32768
+	US cell : 15; //to 32768
 	Cell();
 	explicit Cell(U a);
 	
@@ -20,13 +20,13 @@ struct Cell
 	friend Cell operator / (const U& left, const Cell& right);
 	friend Cell operator % (const U& left, const Cell& right);
 
-	Cell  operator =  (const Cell& right);
+	Cell&  operator =  (const Cell& right);
 	Cell& operator += (const Cell& right);
 	Cell& operator -= (const Cell& right);
 	Cell& operator /= (const Cell& right);
 	Cell& operator %= (const Cell& right);
 
-	Cell  operator =  (const U& right);
+	Cell&  operator =  (const U& right);
 	Cell& operator += (const U& right);
 	Cell& operator -= (const U& right);
 	Cell& operator /= (const U& right);
