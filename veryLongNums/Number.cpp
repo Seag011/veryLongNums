@@ -30,7 +30,7 @@ void Number::normalize()
 	if (this->number.size() == 0)
 		this->sign = true;
 }
-void Number::swapIsLess(Number & left, Number & right)
+void Number::swapIsNumberLess(Number & left, Number & right)
 {
 	if (Number::abs(left) < Number::abs(right))
 	{
@@ -73,7 +73,7 @@ Number::Number(const LL& obj, const bool& Sign)
 }
 
 //TEST
-LL Number::size(const Number& obj)
+U Number::size(const Number& obj)
 {
 	return obj.number.size();
 }
@@ -165,11 +165,11 @@ Number& operator*(const Number& left, const Number& right)
 	LL max_size = l.number.size() * r.number.size();
 	result.number.resize(max_size);
 
-	for (LL i = 0; i < r.number.size(); i++)
+	for (U i = 0; i < r.number.size(); i++)
 	{
 		Number current(0);
 		current.number.resize(max_size);
-		for (LL j = 0; j < l.number.size(); j++)
+		for (U j = 0; j < l.number.size(); j++)
 		{
 			LL temp = r.number[i].cell * l.number[j].cell;
 			current.number[i] += temp % TOP_BORDER;
@@ -192,34 +192,41 @@ Number& operator/(const Number& left, const Number& right)
 	Number r = right;
 	if (Number::abs(l) > Number::abs(r))
 	{
-		if (l == r)
+		if (Number::abs(l) == Number::abs(r))
 			result = 1;
 		else
 		{
 			//ищем делитель делением на отрезки вдвое меньшей длины
 			U sizeOfResult = l.number.size() - r.number.size();
-			ULL compareHighBorder = pow(10, sizeOfResult) - 1;
+			ULL compareHighBorder = static_cast<ULL>(pow(10, sizeOfResult)) - 1;
 			ULL compareLowBorder = (compareHighBorder + 1) / 10;
+			
+			bool isBorderResult = true;
 			while(compareHighBorder - compareLowBorder > 1)
 			{
 				// доделать если верхнаяя граница и результат будет равен 
-				Number temp = (Number)(compareHighBorder)* r;
+				Number temp = (Number)(compareHighBorder) * r;
 				if (temp > l)
 					compareHighBorder = (compareHighBorder + compareLowBorder) / 2;
 				else
 					if (temp == l)
+					{
 						result = compareHighBorder;
-						else
-							compareLowBorder = 
-							(compareHighBorder + compareLowBorder) / 2;
+						isBorderResult = false;
+						break;
+					}
+					else
+						compareLowBorder = 
+						(compareHighBorder + compareLowBorder) / 2;
 			}
+			if (isBorderResult)
 			result = compareLowBorder;
 		}
 	}
 	if (l.sign != r.sign)
 		result.sign = false;
 	else
-		result.sign = l.sign;
+		result.sign = true;
 	return result;
 }//TODO
 

@@ -8,7 +8,8 @@ private:
 	U static setMaxOfTwoSizes(Number& first, Number& second);
 	void insertLowerDigitCell(const Cell& obj);
 	void normalize();
-	void swapIsLess(Number& left, Number& right);
+	void swapIsNumberLess(Number& left, Number& right);
+	//not used 
 public:
 	std::vector <Cell> number;
 	/**
@@ -21,7 +22,7 @@ public:
 	US pull_num(U pos);
 
 	static Number abs(const Number& obj);
-	static LL size(const Number& obj);
+	static U size(const Number& obj);
 	//UNDONE
 				
 	Number();
